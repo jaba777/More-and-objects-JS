@@ -5,6 +5,29 @@ const movies=[];
 
 const renderMovie=()=>{
     const movieList=document.getElementById('movie-list');
+    movieList.innerHTML='';
+    if(movies.length===0){
+        movieList.classList.remove('visible');
+        return;
+    } else{
+        movieList.classList.add('visible');
+    }
+
+    movieList.innerHTML='';
+
+    movies.forEach((movie)=>{
+      const movieEl = document.createElement('li');
+      //movieEl.textContent=movie.info.title + ' - '+ movie.info[extraName];
+      let text=movie.info.title + ' - ';
+      for(const key in movie.info){
+          if(key!=='title'){
+            text+=`${key}:${movie[key]}`;
+            console.log(key);
+          }
+      }
+      movieEl.textContent=text;
+      movieList.append(movieEl);
+    });
 }
 
 const addMovieHandler=()=>{
@@ -27,9 +50,10 @@ const addMovieHandler=()=>{
        };
 
        movies.push(newMovie);
-       console.log(movies);
+       renderMovie();
 
        
 };
 
 addMovieBtn.addEventListener('click',addMovieHandler);
+
